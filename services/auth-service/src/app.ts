@@ -8,7 +8,6 @@ import { rateLimit } from 'express-rate-limit';
 
 // user-defined imports
 import { logger } from './utils/logger';
-import { connectMongoDB } from './db';
 import authRouter from './routes/authRoutes';
 
 // Create Express app
