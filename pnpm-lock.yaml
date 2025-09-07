@@ -94,13 +94,58 @@ importers:
       '@socials/common':
         specifier: workspace:*
         version: link:../../packages/common
+      compression:
+        specifier: ^1.8.1
+        version: 1.8.1
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.5
+      dotenv:
+        specifier: ^17.2.2
+        version: 17.2.2
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      express-rate-limit:
+        specifier: ^8.1.0
+        version: 8.1.0(express@5.1.0)
+      google-auth-library:
+        specifier: ^10.3.0
+        version: 10.3.0
+      helmet:
+        specifier: ^8.1.0
+        version: 8.1.0
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
+      mongodb:
+        specifier: ^6.19.0
+        version: 6.19.0
+      morgan:
+        specifier: ^1.10.1
+        version: 1.10.1
+      nodemailer:
+        specifier: ^7.0.6
+        version: 7.0.6
     devDependencies:
+      '@types/compression':
+        specifier: ^1.8.1
+        version: 1.8.1
+      '@types/cors':
+        specifier: ^2.8.19
+        version: 2.8.19
       '@types/express':
         specifier: ^5.0.3
         version: 5.0.3
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
+      '@types/morgan':
+        specifier: ^1.9.10
+        version: 1.9.10
+      '@types/nodemailer':
+        specifier: ^7.0.1
+        version: 7.0.1
 
 packages:
 
