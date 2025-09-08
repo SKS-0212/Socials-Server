@@ -38,9 +38,9 @@ export const checkUsername = async (req: Request, res: Response) => {
     }
 };
 
-export const getCurrentUser = async (req: Request, res: Response) => {
+export const getUserProfile = async (req: Request, res: Response) => {
     try {
-        const { username } = req.body;
+        const { username } = req.query;
         if (!username) {
             return ResponseHandler.success(
                 res,

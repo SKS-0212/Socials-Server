@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkUsername, getCurrentUser } from "../controllers/userController";
+import { checkUsername, getUserProfile } from "../controllers/userController";
 
 const userRouter = Router();
 
@@ -7,6 +7,6 @@ const userRouter = Router();
 userRouter.route("/checkUsername").post(checkUsername);
 
 // protected routes
-userRouter.route("/").get(getCurrentUser);
+userRouter.route("/profile").get(getUserProfile);
 
 export default userRouter;
