@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors"
 import helmet from "helmet";
 import morgan from "morgan";
@@ -7,6 +7,7 @@ import morgan from "morgan";
 import limiter from "./middlewares/rateLimiter";
 import { logger } from "./utils/logger";
 import { proxyServices } from "./services/proxyService";
+import { authenticateRequest } from "./services/authentication/authentication";
 
 const app = express();
 
@@ -17,8 +18,16 @@ app.use(limiter)
 app.use(express.json())
 app.use(morgan('dev'));
 
+app.use(async (req: Request, res: Response, next: NextFunction) => {
 
-app.get("/health", (req: Request, res: Response) => {
+    if (req.path.startsWith("/api")) {
+        await authenticateRequest(req, res);
+    }
+    req.headers['X-Powered-By'] = 'Socials'
+    next();
+});
+
+app.get("/public/health", (req: Request, res: Response) => {
     return res.status(200).json(
         {
             message: 'Welcome to Socials API',
@@ -30,7 +39,6 @@ app.get("/health", (req: Request, res: Response) => {
 })
 
 proxyServices(app);
-
 
 app.use((req: Request, res: Response) => {
     logger.warn(`Resource not found: ${req.method} ${req.url}`);

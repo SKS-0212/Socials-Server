@@ -9,8 +9,10 @@ dotenv.config();
 const envKeys: Set<keyof IEnvSchema> = new Set<keyof IEnvSchema>([
     "PORT",
     "NODE_ENV",
+    "MONGO_URI",
     "AUTH_SERVICE_URL",
-    "USER_SERVICE_URL"
+    "USER_SERVICE_URL",
+    "JWT_ACCESS_SECRET"
 ]);
 
 export const config: Partial<IEnvSchema> = {};

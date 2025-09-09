@@ -38,16 +38,11 @@ export const checkUsername = async (req: Request, res: Response) => {
     }
 };
 
-export const getUserProfile = async (req: Request, res: Response) => {
+export const getCurrentUser = async (req: Request, res: Response) => {
     try {
-        const { username } = req.query;
-        if (!username) {
-            return ResponseHandler.success(
-                res,
-                400,
-                { success: false, error: "username is required" }
-            );
-        }
+        // Use type assertion to tell TypeScript that req has a user property
+        const username = (req as any).user?.username;
+
         const user = await (await getCollection(ECollectionSchema.USER, null))
             .findOne(
                 { username },

@@ -31,7 +31,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Routes
-app.get('/api/v1/auth/health', (_: Request, res: Response) => {
+app.get('/auth/health', (_: Request, res: Response) => {
     res.json({
         message: 'Welcome to Socials API',
         service_name: 'auth-service',
@@ -40,7 +40,7 @@ app.get('/api/v1/auth/health', (_: Request, res: Response) => {
     });
 });
 
-app.use("/api/v1/auth", authRouter)
+app.use("/auth", authRouter)
 
 // Error handling middleware
 app.use((err: Error, _: Request, res: Response, __: NextFunction) => {

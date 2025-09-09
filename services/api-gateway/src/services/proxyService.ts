@@ -9,9 +9,9 @@ import { ProxyErrorResponse, ServiceConfig } from "../config/serviceConfig";
 class ServiceProxy {
     private static readonly serviceConfigs: ServiceConfig[] = [
         {
-            path: '/api/v1/auth/',
+            path: '/auth/',
             url: config.AUTH_SERVICE_URL!,
-            pathRewrite: { '^/': '/api/v1/auth/' },
+            pathRewrite: { '^/': '/auth/' },
             name: 'auth-service',
             timeout: 5000,
         },
@@ -19,6 +19,13 @@ class ServiceProxy {
             path: '/api/v1/user/',
             url: config.USER_SERVICE_URL!,
             pathRewrite: { '^/': '/api/v1/user/' },
+            name: 'user-service',
+            timeout: 5000,
+        },
+        {
+            path: '/public/user/',
+            url: config.USER_SERVICE_URL!,
+            pathRewrite: { '^/': '/public/user/' },
             name: 'user-service',
             timeout: 5000,
         }
@@ -56,7 +63,19 @@ class ServiceProxy {
 
     private static handleProxyRequest(proxyReq: any, req: any): void {
         logger.debug(`Proxying request to ${req.path}`);
+
+        if (req.body && Object.keys(req.body).length) {
+            const bodyData = JSON.stringify(req.body);
+
+            // Rewrite headers
+            proxyReq.setHeader('Content-Type', 'application/json');
+            proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+
+            // Write body
+            proxyReq.write(bodyData);
+        }
     }
+
 
     private static handleProxyResponse(proxyRes: any, req: any): void {
         logger.debug(`Received response for ${req.path}`);

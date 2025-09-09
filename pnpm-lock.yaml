@@ -36,6 +36,9 @@ importers:
       '@socials/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
       '@types/morgan':
         specifier: ^1.9.10
         version: 1.9.10
@@ -57,6 +60,12 @@ importers:
       http-proxy-middleware:
         specifier: ^3.0.5
         version: 3.0.5
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
+      mongodb:
+        specifier: ^6.19.0
+        version: 6.19.0
       morgan:
         specifier: ^1.10.1
         version: 1.10.1

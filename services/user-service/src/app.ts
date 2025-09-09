@@ -8,7 +8,8 @@ import { rateLimit } from 'express-rate-limit';
 
 // user-defined imports
 import { logger } from './utils/logger';
-import authRouter from './routes/userRoutes';
+import publicRouter from './routes/publicRouter';
+import privateRouter from './routes/privateRouter';
 
 // Create Express app
 const app = express();
@@ -31,16 +32,10 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Routes
-app.get('/api/v1/user/health', (_: Request, res: Response) => {
-    res.json({
-        message: 'Welcome to Socials API',
-        service_name: 'user-service',
-        status: 'Server is running',
-        version: '1.0.0'
-    });
-});
 
-app.use("/api/v1/user", authRouter)
+app.use("/public/user", publicRouter);
+app.use("/api/v1/user", privateRouter);
+
 
 // Error handling middleware
 app.use((err: Error, _: Request, res: Response, __: NextFunction) => {

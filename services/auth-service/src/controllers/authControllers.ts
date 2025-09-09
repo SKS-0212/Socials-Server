@@ -321,3 +321,60 @@ export const resendOTP = async (req: Request, res: Response) => {
         );
     }
 }
+
+export const login = async (req: Request, res: Response) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) {
+            return ResponseHandler.success(
+                res,
+                400,
+                { success: false, error: "Username and password are required" }
+            );
+        }
+
+        const userCollection = await getCollection<IUser>(ECollectionSchema.USER, null);
+        const user = await userCollection.findOne({ username });
+
+        if (!user) {
+            return ResponseHandler.success(
+                res,
+                404,
+                { success: false, error: "User not found" }
+            );
+        }
+
+        const isPasswordValid = await comparePassword(password, user.password);
+        if (!isPasswordValid) {
+            return ResponseHandler.success(
+                res,
+                401,
+                { success: false, error: "Invalid password" }
+            );
+        }
+
+        return ResponseHandler.success(
+            res,
+            200,
+            {
+                success: true,
+                message: "Login successful",
+                data: {
+                    refreshToken: generateRefreshToken(user.username),
+                    accessToken: generateAccessToken(user.username)
+                }
+            }
+        );
+    } catch (error) {
+        logger.error("Error in login:", error);
+        return ResponseHandler.error(
+            res,
+            500,
+            { success: false, error: "Internal Server Error" }
+        );
+    }
+}
+const comparePassword = async (plainText: string, hashed: string): Promise<boolean> => {
+    // In a real application, use bcrypt or another hashing library
+    return plainText === hashed;
+}
