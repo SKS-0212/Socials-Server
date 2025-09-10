@@ -1,0 +1,17 @@
+meta {
+  name: checkUsername
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{social_local}}/public/user/check-username
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username":"Nikhils"
+  }
+}

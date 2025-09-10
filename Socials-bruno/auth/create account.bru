@@ -1,0 +1,23 @@
+meta {
+  name: create account
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{social_local}}/auth/createAccount
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0BnbWFpbC5jb20iLCJpYXQiOjE3NTc0NDg5NzgsImV4cCI6MTc1NzQ0OTg3OH0.g0IFinbYfLkJInW1ij1VL5LKvvCaOt2cZeskyiCZFPE
+}
+
+body:json {
+  {
+    "name":"abc",
+    "password":"abc123",
+    "username":"abc@123"
+  }
+}

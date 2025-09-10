@@ -1,0 +1,11 @@
+meta {
+  name: Api-gateway health
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{social_local}}/public/health
+  body: none
+  auth: inherit
+}

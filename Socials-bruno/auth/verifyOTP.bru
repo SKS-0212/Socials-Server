@@ -1,0 +1,18 @@
+meta {
+  name: verifyOTP
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{social_local}}/auth/verifyOTP
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email":"malhotranikhil863@gmail.com",
+    "otp":"851789"
+  }
+}

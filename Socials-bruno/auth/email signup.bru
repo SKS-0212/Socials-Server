@@ -1,0 +1,17 @@
+meta {
+  name: email signup
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{social_local}}/auth/signupWithEmail
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email":"malhotranikhil863@gmail.com"
+  }
+}
