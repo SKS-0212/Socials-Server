@@ -144,7 +144,7 @@ export async function getCollection<T extends Document>(
 export function getDbName(dbname: string | undefined | null) {
 
     if (dbname == null || dbname === "null" || dbname === "undefined" || !dbname) {
-        return "socail_db"; // default database name (global)
+        return "social_db"; // default database name (global)
     }
 
     else {
