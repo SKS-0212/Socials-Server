@@ -11,13 +11,18 @@ post {
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0BnbWFpbC5jb20iLCJpYXQiOjE3NTc0NDg5NzgsImV4cCI6MTc1NzQ0OTg3OH0.g0IFinbYfLkJInW1ij1VL5LKvvCaOt2cZeskyiCZFPE
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbGhvdHJhbmlraGlsODYzQGdtYWlsLmNvbSIsImlhdCI6MTc1NzUyMTI0MSwiZXhwIjoxNzU3NTIyMTQxfQ.cFU_0MQyLSRY2Lieb4QvtRgDFUrTI1NwT6KCT8nkOO0
 }
 
 body:json {
   {
-    "name":"abc",
-    "password":"abc123",
-    "username":"abc@123"
+    "name":"Nikhil",
+    "password":"Nik123",
+    "username":"nik@123"
   }
+}
+
+script:post-response {
+  let token = res.getBody()?.data?.accessToken;
+  bru.setEnvVar("token", token);
 }
