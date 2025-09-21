@@ -5,6 +5,7 @@ import { emailService, verifyGoogleToken } from "../services/index";
 import { generateAccessToken, generateAccountCreationToken, generateRefreshToken } from "../services/index";
 import { getCollection, ECollectionSchema } from "../db/index";
 import { config } from "../config/index";
+import { comparePassword, hashPassword } from "../utils/password_hashing";
 
 const newUsers = new Map<string, { email: string, OTP: string, expiration: Date }>();
 
@@ -149,7 +150,7 @@ export const createAccount = async (req: Request, res: Response) => {
 
         const user: IUser = {
             name,
-            password,
+            password: await hashPassword(password),
             username,
             email,
             dob: dob || "",
@@ -373,8 +374,4 @@ export const login = async (req: Request, res: Response) => {
             { success: false, error: "Internal Server Error" }
         );
     }
-}
-const comparePassword = async (plainText: string, hashed: string): Promise<boolean> => {
-    // In a real application, use bcrypt or another hashing library
-    return plainText === hashed;
 }
