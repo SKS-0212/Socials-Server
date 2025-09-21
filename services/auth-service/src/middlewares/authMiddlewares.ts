@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { logger } from "../utils/logger";
-import { verifyAccessToken, verifyAccountCreationToken, verifyRefreshToken } from "../services/index";
+import { verifyAccessToken, verifyAccountCreationToken, verifyRefreshToken, verifyResetToken } from "../services/index";
 import { ResponseHandler } from "@socials/common";
 
 
@@ -49,6 +49,22 @@ export const verifyRefreshTokenMiddleware = (req: Request, res: Response, next: 
         next();
     } catch (error) {
         logger.error("error in validating refresh token:", error);
+        return ResponseHandler.error(res, 401, { success: false, error: "Unauthorized" });
+    }
+}
+
+export const verifyResetTokenMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const token = req.headers["authorization"]?.split(" ")[1];
+        if (!token) {
+            return ResponseHandler.error(res, 401, { success: false, error: "Unauthorized" });
+        }
+
+        const { email } = verifyResetToken(token);
+        req.body = { ...req.body, email };
+        next();
+    } catch (error) {
+        logger.error("error in validating reset token:", error);
         return ResponseHandler.error(res, 401, { success: false, error: "Unauthorized" });
     }
 }

@@ -36,3 +36,15 @@ export const verifyRefreshToken = (token: string): { username: string } => {
     const secret = process.env.JWT_REFRESH_SECRET!;
     return jwt.verify(token, secret) as { username: string };
 };
+
+export const generateResetToken = (email: string): string => {
+    const payload = { email };
+    const secret = config.JWT_ACCOUNT_CREATION_SECRET!;
+    const options: SignOptions = { expiresIn: '15m' };
+    return jwt.sign(payload, secret, options);
+};
+
+export const verifyResetToken = (token: string): { email: string } => {
+    const secret = config.JWT_ACCOUNT_CREATION_SECRET!;
+    return jwt.verify(token, secret) as { email: string };
+}
