@@ -1,3 +1,4 @@
 export enum ECollectionSchema {
-    USER = "users"
+    USER = "users",
+    BLACKLISTED_TOKENS = "blacklisted_tokens"
 }
