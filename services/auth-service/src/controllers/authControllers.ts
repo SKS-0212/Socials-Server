@@ -31,7 +31,12 @@ export const signupWithEmail = async (req: Request, res: Response) => {
             );
         }
 
-        const otp = generateRandomOTP();
+        let otp = "123456";
+
+        if (config.NODE_ENV === 'production') {
+            otp = generateRandomOTP();
+            await emailService.sendOTPEmail(email, otp);
+        }
         newUsers.set(
             email,
             {
@@ -40,17 +45,12 @@ export const signupWithEmail = async (req: Request, res: Response) => {
                 expiration: new Date(Date.now() + 1 * 60 * 1000)
             });
 
-        if (config.NODE_ENV === 'production') {
-            await emailService.sendOTPEmail(email, otp);
-        }
-
         return ResponseHandler.success(
             res,
             200,
             {
                 success: true,
-                message: "OTP sent to email",
-                data: config.NODE_ENV === 'development' ? { otp } : {}
+                message: "OTP sent to email"
             }
         )
     } catch (error) {
@@ -296,11 +296,23 @@ export const resendOTP = async (req: Request, res: Response) => {
             );
         }
 
-        // Generate and send OTP
-        const otp = generateRandomOTP();
+        // Generate and send 
+
+        let otp = "123456";
+
         if (config.NODE_ENV === 'production') {
+            otp = generateRandomOTP();
             await emailService.sendOTPEmail(email, otp);
         }
+
+        newUsers.set(
+            email,
+            {
+                email,
+                OTP: otp,
+                expiration: new Date(Date.now() + 1 * 60 * 1000)
+            }
+        );
 
         return ResponseHandler.success(
             res,
@@ -308,9 +320,6 @@ export const resendOTP = async (req: Request, res: Response) => {
             {
                 success: true,
                 message: "OTP sent successfully",
-                data: {
-                    otp: config.NODE_ENV === 'development' ? otp : undefined
-                }
             }
         );
 
@@ -401,8 +410,11 @@ export const sendForgotPasswordOTP = async (req: Request, res: Response) => {
         }
 
         // Generate and send OTP
-        const otp = generateRandomOTP();
+
+        let otp = "123456";
+
         if (config.NODE_ENV === 'production') {
+            otp = generateRandomOTP();
             await emailService.sendOTPEmail(email, otp);
         }
         forgotPasswordOTPs.set(

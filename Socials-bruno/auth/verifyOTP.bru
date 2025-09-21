@@ -12,7 +12,12 @@ post {
 
 body:json {
   {
-    "email":"malhotranikhil863@gmail.com",
-    "otp":"851789"
+    "email":"malhotranikhil8635@gmail.com",
+    "otp":"123456"
   }
+}
+
+script:post-response {
+  let token = res.getBody()?.data?.token;
+  bru.setEnvVar("account_token", token);
 }
